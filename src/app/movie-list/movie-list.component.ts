@@ -27,7 +27,6 @@ export class MovieListComponent implements OnInit {
   }
 
   getMovieByWordSearch(keyword: string){
-    //window.alert(keyword);
     this.movieService.getMovieByWordSearch(keyword).subscribe(
       movieFromApiDto => this.movies = movieFromApiDto.results
     )
