@@ -23,7 +23,9 @@ export class MovieService {
   }
 
   getMovieByWordSearch(keyword: string): Observable<MovieFromApiDto>{
-    let fullUrl: string = this.baseUrl + `/products/search?q=${keyword}`;
+    let fullUrl: string = this.baseUrl + `/search/movie?q=${keyword}`;
+    fullUrl = `${this.baseUrl}/search/movie${this.apiKeyQueryParam}&language=fr&page=1&query=${keyword}`;
+
     return this.http.get<MovieFromApiDto>(fullUrl).pipe(
       catchError(this.handleError<MovieFromApiDto>("getMovies"))
     );
@@ -31,7 +33,6 @@ export class MovieService {
 
   getMovieById(id:number): Observable<Movie>{
     let fullUrl = this.baseUrl+`/movie/${id}` + this.apiKeyQueryParam + "&language=fr";
-    let otherUrl: string = 'https://api.themoviedb.org/3/movie/' + id + '?api_key=b9e250836c77731e4daa1e7f4714d416&language=fr';
     return this.http.get<Movie>(fullUrl).pipe(
       catchError(this.handleError<Movie>("getMovieById"))
     )

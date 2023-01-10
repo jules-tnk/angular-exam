@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Movie} from "../model/movie";
 import {MovieService} from "../services/movie/movie.service";
 
@@ -9,7 +9,9 @@ import {MovieService} from "../services/movie/movie.service";
 })
 export class MovieListComponent implements OnInit {
 
-  movies: Movie[] = []
+  MOVIES_KEY: string = "CART_KEY";
+
+  movies: Movie[] = [];
 
   constructor(private movieService: MovieService) {
   }
@@ -25,7 +27,10 @@ export class MovieListComponent implements OnInit {
   }
 
   getMovieByWordSearch(keyword: string){
-    this.movieService.getMovieByWordSearch(keyword)
+    //window.alert(keyword);
+    this.movieService.getMovieByWordSearch(keyword).subscribe(
+      movieFromApiDto => this.movies = movieFromApiDto.results
+    )
   }
 
 }
